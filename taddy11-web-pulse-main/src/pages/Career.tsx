@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Search, MapPin, Clock, Users, Award, Heart, Code, Smartphone, Server, Settings, User, Palette, TestTube, X, Send, CheckCircle, Building, Globe, Zap } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
@@ -203,6 +204,7 @@ const departments = ['All', 'Engineering', 'Design', 'Product', 'Infrastructure'
 const locations = ['All', 'Remote', 'San Francisco', 'New York', 'Austin', 'Seattle', 'Los Angeles', 'Boston', 'Chicago'];
 
 const Career: React.FC = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('All');
   const [selectedLocation, setSelectedLocation] = useState('All');
@@ -352,6 +354,14 @@ const Career: React.FC = () => {
 
 const handleApplicationSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
+  
+  // Check if user is logged in
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  if (!isLoggedIn) {
+    alert('Please login to submit your application');
+    navigate('/login');
+    return;
+  }
 
   const formData = new FormData();
   formData.append('name', applicationData.name); 
@@ -417,66 +427,6 @@ const handleApplicationSubmit = async (e: React.FormEvent) => {
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-  
-  // return (
-  //   <div className="min-h-screen bg-gradient-to-br from-[#fffff] to-[#ffffff]] career-page">
-  //     <Navbar />
-      
-      {/* Hero Section */}
-      // <section className="relative min-h-screen flex items-center justify-center overflow-hidden  bg-[rgb(182, 219, 232)]">
-        {/* Animated Background */}
-        {/* <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#82eefd] via-[#00b4d8] to-[#1e90ff] ">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.3),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(120,119,198,0.2),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_60%,rgba(59,130,246,0.15),transparent_50%)]"></div>
-        </div> */}
-        
-        {/* Floating Elements */}
-        {/* <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
-          <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float animation-delay-4000"></div>
-        </div> */}
-
-
-
-        {/* <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white"> */}
-          {/* <div className="mb-8">
-            <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
-              <Zap className="w-4 h-4 mr-2 text-yellow-300" />
-              /* <span className="text-sm font-medium">We're Hiring Amazing Talent</span>
-            </div>
-          </div>  */}
-           
-           {/* <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight p-2">
-            Join Our
-            <span className="block bg-gradient-to-r from-blue-200 via-white to-blue-200 bg-clip-text text-transparent animate-pulse">
-              Amazing Team
-            </span>
-          </h1> */}
-          
-          {/* <p className="text-xl md:text-xl my-16 text-blue-100 max-w-4xl mx-auto leading-relaxed">
-            Build the future with us. We're looking for passionate individuals who want to make a difference 
-            in the world of technology and innovation.
-          </p>
-
-          <h1 className="text-6xl md:text-8xl font-bold leading-tight p-2 mb-10">
-  Join Our
-  <span className="block bg-gradient-to-r from-blue-200 via-white to-blue-200 bg-clip-text text-transparent animate-pulse">
-    Amazing Team
-  </span>
-</h1> */}
-
 return(
 
   <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] career-page">
@@ -506,18 +456,10 @@ return(
 
           <h1 className="text-6xl md:text-8xl font-bold leading-tight p-2 mb-10">
             Join Our
-            <span className="block bg-gradient-to-r from-blue-300 via-white to-blue-300 bg-clip-text text-transparent animate-pulse">
+            <span className="block bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent animate-pulse">
               Amazing Team
             </span>
           </h1>
-
-
-
-
-
-
-
-
 
 <p className="text-xl md:text-xl text-blue-100 max-w-4xl mx-auto leading-relaxed my-8 ">
   Build the future with us. We're looking for passionate individuals who want to make a difference 
@@ -1274,7 +1216,7 @@ return(
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-colors flex items-center"
                 >
                   <Send className="w-4 h-4 mr-2" />
                   Submit Application
